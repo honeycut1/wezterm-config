@@ -6,8 +6,10 @@ local act = wezterm.action
 local mod = {}
 
 if platform.is_mac then
-   mod.SUPER = 'SUPER'
-   mod.SUPER_REV = 'SUPER|CTRL'
+   -- mod.SUPER = 'SUPER'
+   -- mod.SUPER_REV = 'SUPER|CTRL'
+   mod.SUPER = 'ALT'
+   mod.SUPER_REV = 'ALT|CTRL'
 elseif platform.is_win or platform.is_linux then
    mod.SUPER = 'ALT' -- to not conflict with Windows key shortcuts
    mod.SUPER_REV = 'ALT|CTRL'
@@ -180,15 +182,22 @@ local keys = {
    {
       key = 'p',
       mods = mod.SUPER_REV,
-      action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
-   },
+      --action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
+      action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActive' }),
+},
 
    -- panes: scroll pane
    { key = 'u',        mods = mod.SUPER, action = act.ScrollByLine(-5) },
    { key = 'd',        mods = mod.SUPER, action = act.ScrollByLine(5) },
-   { key = 'PageUp',   mods = 'NONE',    action = act.ScrollByPage(-0.75) },
-   { key = 'PageDown', mods = 'NONE',    action = act.ScrollByPage(0.75) },
+--   { key = 'PageUp',   mods = 'NONE',    action = act.ScrollByPage(-0.75) },
+--   { key = 'PageDown', mods = 'NONE',    action = act.ScrollByPage(0.75) },
+   { key = 'PageUp',   mods = 'SHIFT',    action = act.ScrollByPage(-1) },
+   { key = 'PageDown', mods = 'SHIFT',    action = act.ScrollByPage(1) },
 
+   -- For laptop we need to use the raw keycodes for KeyPadPageUp and KeyPadPageDown
+   { key = "raw:81", mods = "SHIFT", action = wezterm.action.ScrollByPage(-1) },
+   { key = "raw:89", mods = "SHIFT", action = wezterm.action.ScrollByPage(1) },
+   
    -- key-tables --
    -- resizes fonts
    {
@@ -242,6 +251,7 @@ local mouse_bindings = {
 
 return {
    disable_default_key_bindings = true,
+   -- debug_key_events = true,
    -- disable_default_mouse_bindings = true,
    leader = { key = 'Space', mods = mod.SUPER_REV },
    keys = keys,
