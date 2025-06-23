@@ -21,7 +21,7 @@ return {
          -- The username to use on the remote host
          --username = 'johnh',
          assume_shell = 'Posix',
-         remote_wezterm_path = "/opt/homebrew/bin/wezterm",
+         remote_wezterm_path = '/opt/homebrew/bin/wezterm',
       },
       {
          -- This name identifies the domain
@@ -33,10 +33,21 @@ return {
          username = 'johnh',
          assume_shell = 'Posix',
          -- remote_wezterm_path = "/home/johnh/bin/wezterm",
-         remote_wezterm_path = "/usr/bin/wezterm",
+         remote_wezterm_path = '/usr/bin/wezterm',
       },
    },
 
    -- ref: https://wezfurlong.org/wezterm/multiplexing.html#unix-domains
    unix_domains = {},
+
+   -- ref: https://wezfurlong.org/wezterm/config/lua/WslDomain.html
+   wsl_domains = {
+      {
+         name = 'WSL:Ubuntu',
+         distribution = 'Ubuntu',
+         username = 'foo',
+         default_cwd = '/home/foo',
+         default_prog = { 'fish', '-l' },
+      },
+   },
 }
