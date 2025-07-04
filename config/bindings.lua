@@ -29,7 +29,8 @@ local keys = {
    },
    { key = 'F11', mods = 'NONE',    action = act.ToggleFullScreen },
    { key = 'F12', mods = 'NONE',    action = act.ShowDebugOverlay },
-   { key = 'f',   mods = mod.SUPER, action = act.Search({ CaseInSensitiveString = '' }) },
+   { key = 'f',   mods = mod.SUPER_REV, action = act.Search({ CaseInSensitiveString = '' }) },
+--[[
    {
       key = 'u',
       mods = mod.SUPER_REV,
@@ -49,10 +50,13 @@ local keys = {
          end),
       }),
    },
+]]
 
    -- cursor movement --
+--[[ Conflicts with tmux & zellij
    { key = 'LeftArrow',  mods = mod.SUPER,     action = act.SendString '\u{1b}OH' },
    { key = 'RightArrow', mods = mod.SUPER,     action = act.SendString '\u{1b}OF' },
+]]
    { key = 'Backspace',  mods = mod.SUPER,     action = act.SendString '\u{15}' },
 
    -- copy/paste --
@@ -62,12 +66,14 @@ local keys = {
    -- tabs --
    -- tabs: spawn+close
    { key = 't',          mods = mod.SUPER,     action = act.SpawnTab('DefaultDomain') },
+--[[
    { key = 't',          mods = mod.SUPER_REV, action = act.SpawnTab({ DomainName = 'WSL:Ubuntu' }) },
+]]
    { key = 'w',          mods = mod.SUPER_REV, action = act.CloseCurrentTab({ confirm = false }) },
 
    -- tabs: navigation
-   { key = '[',          mods = mod.SUPER,     action = act.ActivateTabRelative(-1) },
-   { key = ']',          mods = mod.SUPER,     action = act.ActivateTabRelative(1) },
+   { key = '[',          mods = 'CTRL',     action = act.ActivateTabRelative(-1) },
+   { key = ']',          mods = 'CTRL',     action = act.ActivateTabRelative(1) },
    { key = '[',          mods = mod.SUPER_REV, action = act.MoveTabRelative(-1) },
    { key = ']',          mods = mod.SUPER_REV, action = act.MoveTabRelative(1) },
 
@@ -80,12 +86,13 @@ local keys = {
 
    -- window --
    -- window: spawn windows
+--[[
    { key = 'n',          mods = mod.SUPER,     action = act.SpawnWindow },
-
+]]
    -- window: zoom window
    {
       key = '-',
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          local dimensions = window:get_dimensions()
          if dimensions.is_full_screen then
@@ -98,7 +105,7 @@ local keys = {
    },
    {
       key = '=',
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          local dimensions = window:get_dimensions()
          if dimensions.is_full_screen then
@@ -111,6 +118,7 @@ local keys = {
    },
 
    -- background controls --
+--[=[
    {
       key = [[/]],
       mods = mod.SUPER,
@@ -118,16 +126,17 @@ local keys = {
          backdrops:random(window)
       end),
    },
+]=]
    {
       key = [[,]],
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          backdrops:cycle_back(window)
       end),
    },
    {
       key = [[.]],
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          backdrops:cycle_forward(window)
       end),
@@ -151,12 +160,15 @@ local keys = {
    },
    {
       key = 'b',
-      mods = mod.SUPER,
+      mods = mod.SUPER_REV,
       action = wezterm.action_callback(function(window, _pane)
          backdrops:toggle_focus(window)
       end)
    },
 
+--[=[ ******************************************
+********* Use tmux or zellij to manage panes
+*********************************************
    -- panes --
    -- panes: split panes
    {
@@ -185,18 +197,20 @@ local keys = {
       --action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActiveKeepFocus' }),
       action = act.PaneSelect({ alphabet = '1234567890', mode = 'SwapWithActive' }),
 },
+]=]
+
 
    -- panes: scroll pane
    { key = 'u',        mods = mod.SUPER, action = act.ScrollByLine(-5) },
    { key = 'd',        mods = mod.SUPER, action = act.ScrollByLine(5) },
 --   { key = 'PageUp',   mods = 'NONE',    action = act.ScrollByPage(-0.75) },
 --   { key = 'PageDown', mods = 'NONE',    action = act.ScrollByPage(0.75) },
-   { key = 'PageUp',   mods = 'SHIFT',    action = act.ScrollByPage(-1) },
-   { key = 'PageDown', mods = 'SHIFT',    action = act.ScrollByPage(1) },
+   { key = 'PageUp',   mods = 'SHIFT',    action = act.ScrollByPage(-0.75) },
+   { key = 'PageDown', mods = 'SHIFT',    action = act.ScrollByPage(0.75) },
 
    -- For laptop we need to use the raw keycodes for KeyPadPageUp and KeyPadPageDown
-   { key = "raw:81", mods = "SHIFT", action = wezterm.action.ScrollByPage(-1) },
-   { key = "raw:89", mods = "SHIFT", action = wezterm.action.ScrollByPage(1) },
+   { key = "raw:81", mods = "SHIFT", action = wezterm.action.ScrollByPage(-0.75) },
+   { key = "raw:89", mods = "SHIFT", action = wezterm.action.ScrollByPage(0.75) },
    
    -- key-tables --
    -- resizes fonts
