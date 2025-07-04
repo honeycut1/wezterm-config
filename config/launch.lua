@@ -3,6 +3,9 @@ local platform = require('utils.platform')
 local options = {
    default_prog = {},
    launch_menu = {},
+
+   initial_cols = 120,
+   initial_rows = 30,
 }
 
 if platform.is_win then
@@ -19,9 +22,9 @@ if platform.is_win then
       },
    }
 elseif platform.is_mac then
-   options.default_prog = { 'bash', '-l' }
+   options.default_prog = { '/opt/homebrew/bin/bash', '-l' }
    options.launch_menu = {
-      { label = 'Bash', args = { 'bash', '-l' } },
+      { label = 'Bash', args = { '/opt/homebrew/bin/bash', '-l' } },
       { label = 'Fish', args = { '/opt/homebrew/bin/fish', '-l' } },
       { label = 'Nushell', args = { '/opt/homebrew/bin/nu', '-l' } },
       { label = 'Zsh', args = { 'zsh', '-l' } },
