@@ -59,6 +59,7 @@ end
 ---   initial load of the Terminal config.
 function BackDrops:set_images()
    self.images = wezterm.glob(self.images_dir .. GLOB_PATTERN)
+   print('Backdrops:set_images - Loaded %d images', #self.images)
    return self
 end
 
@@ -171,11 +172,13 @@ end
 ---@param window any? WezTerm `Window` see: https://wezfurlong.org/wezterm/config/lua/window/index.html
 function BackDrops:random(window)
    self.current_idx = math.random(#self.images)
+   self.current_idx = 13
 
    if window ~= nil then
       self:_set_opt(window, self:_create_opts())
    end
 end
+
 
 ---Cycle the loaded `files` and select the next background
 ---@param window any WezTerm `Window` see: https://wezfurlong.org/wezterm/config/lua/window/index.html
