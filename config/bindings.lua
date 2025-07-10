@@ -253,6 +253,9 @@ local key_tables = {
    },
 }
 
+-- https://www.reddit.com/r/wezterm/comments/10jda7o/is_there_a_way_not_to_open_urls_on_simple_click/
+-- https://github.com/wezterm/wezterm/issues/119
+--[[
 local mouse_bindings = {
    -- Ctrl-click will open the link under the mouse cursor
    {
@@ -260,6 +263,31 @@ local mouse_bindings = {
       mods = 'CTRL',
       action = act.OpenLinkAtMouseCursor,
    },
+}
+]]
+
+mouse_bindings = {
+  -- Change the default click behavior so that it only selects
+  -- text and doesn't open hyperlinks
+  {
+    event={Up={streak=1, button="Left"}},
+    mods="NONE",
+    action=act.CompleteSelection("PrimarySelection"),
+  },
+
+  -- and make CTRL-Click open hyperlinks
+  {
+    event={Up={streak=1, button="Left"}},
+    mods="CTRL",
+    action=act.OpenLinkAtMouseCursor,
+  },
+
+  -- Disable the 'Down' event of CTRL-Click to avoid weird program behaviors
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'CTRL',
+    action = act.Nop,
+  }
 }
 
 return {
