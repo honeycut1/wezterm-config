@@ -37,15 +37,22 @@ return {
 
    -- window
    window_padding = {
-      left = 0,
-      right = 0,
+      left = 8,
+      right = 5,
       top = 10,
-      bottom = 7.5,
+      bottom = 7,
    },
    adjust_window_size_when_changing_font_size = false,
    window_close_confirmation = 'NeverPrompt',
    window_frame = {
       active_titlebar_bg = '#090909',
+      border_left_width = '0.4cell',
+      border_right_width = '0.4cell',
+      border_bottom_height = '0.2cell',
+      -- border_left_color = 'green',
+      -- border_right_color = 'green',
+      -- border_bottom_color = 'green',
+      -- border_top_color = 'green',
       -- font = fonts.font,
       -- font_size = fonts.font_size,
    },
