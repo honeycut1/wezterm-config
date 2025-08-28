@@ -3,12 +3,13 @@ local platform = require('utils.platform')
 
 -- local font = 'Maple Mono SC NF'
 local font_family = 'JetBrainsMono Nerd Font'
-local font_size = platform.is_mac and 12 or 11
+local font_size = platform.is_mac and 14 or 11
 
 return {
    font = wezterm.font({
       family = font_family,
       weight = 'Medium',
+      harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
    }),
    font_size = font_size,
 
